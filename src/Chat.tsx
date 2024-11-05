@@ -1,18 +1,23 @@
 import { Chatbox } from "@talkjs/react";
-import styles from "./Chat.css";
+import "./Chat.css";
 import Talk from "talkjs";
 
-export const Chat = () => {
-    const syncConversation = (session: Talk.Session) => {
-        const conversation = session.getOrCreateConversation("1_2");
-        return conversation;
-    };
+interface Props {
+	hasChat: boolean;
+}
 
-    return (
-        <Chatbox
-            className={styles.chatArea}
-            syncConversation={syncConversation}
-            loadingComponent={<h1>Loading..</h1>}
-        />
-    )
+export const Chat = ({ hasChat }: Props) => {
+	const syncConversation = (session: Talk.Session) => {
+		const conversation = session.getOrCreateConversation("1_2");
+		return conversation;
+	};
+
+	if (hasChat)
+		return (<Chatbox
+			className="chat"
+			syncConversation={syncConversation}
+			loadingComponent={<h1>Loading..</h1>}
+		/>)
+	else
+		return (<div className="chat">empty</div>)
 }
